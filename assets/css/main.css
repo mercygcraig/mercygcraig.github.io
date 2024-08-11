@@ -2618,7 +2618,7 @@ input, select, textarea {
 		background-position: top left, top right, bottom left, bottom right;
 		background-repeat: no-repeat;
 		background-size: 25em;
-		padding: 7em 0;
+		padding: 1em 0;
 	}
 
 		#main, #main2, #main3 > :last-child {
@@ -2639,7 +2639,7 @@ input, select, textarea {
 			}*/
 
 	body.index #main, #main2, #main3 {
-		padding-top: 5em;
+		padding-top: 0em;
 	}
 
 /* CTA */
@@ -3288,7 +3288,7 @@ input, select, textarea {
 		/* Banner */
 
 			#banner {
-				background-size: 10em, 10em, auto, cover;
+				background-size: 70em, 70em, auto, cover;
 				padding: 6em 0;
 			}
 
