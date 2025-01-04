@@ -104,7 +104,7 @@ input, select, textarea {
 		background: -webkit-linear-gradient(225deg, #8fcb9b 0%, #3e6259 50%, #1f1f1f 100%);
 		background: -ms-linear-gradient(225deg, #8fcb9b 0%, #3e6259 50%, #1f1f1f 100%);
 		background: linear-gradient(225deg, #8fcb9b 0%, #3e6259 50%, #1f1f1f 100%), 
-            url('http://127.0.0.1:5500/images/geometric-leaves.webp');
+            url('http://127.0.0.1:5500/images/geometric-leaves.png');
 		background-blend-mode: multiply;
 		background-size: cover; /* Adjust as needed */
 		background-repeat: no-repeat;
