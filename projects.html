@@ -1,0 +1,513 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>My Work - Mercy Craig - Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/slideshow.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<style>
+			h1, h2, h3 {
+				text-align: center;
+			}
+
+			.col-5 {
+				text-align: center;
+			}
+
+			.hidden {
+				display: none;
+			}
+
+		</style>
+
+		 <style>
+        /* Basic styles for modal */
+        #imageModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        #imageModal img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        #imageModal span {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+		.clickable-image {
+			cursor: pointer;
+		}
+
+        .content {
+            overflow: hidden;
+            padding-top: 10px;
+        }
+    </style>
+
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1>My Work in Action</h1>
+						<p>Designed, Developed, Delivered</p>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Content -->
+							<section id="content" class="main">
+								<!-- <span class="image main"><img src="images/pic04.jpg" alt="" /></span> -->
+
+								<h1>Web Development</h1>
+								<h2>Glitnir Ticketing</h2>
+
+								
+
+								<h3>Miniplan Event Selection Redesign</h3>
+
+								<p>This project involved modernizing an outdated event selection page, originally designed with standard checkboxes, into an engaging and user-friendly interface. I redesigned the visuals, transforming the checkboxes into a sleek, modern design that retained their functionality while significantly improving the user experience. To enhance usability, I added "Select All" and "Deselect All" buttons, enabling quick bulk actions. Additionally, I implemented dynamic text that updates in real-time to display the number of selected events, providing users with clear feedback. To further customize the experience, I incorporated functionality to limit the maximum number of selectable events, ensuring flexibility for various use cases.
+									<i>Note: Screenshots are from a test environment and includes placeholder data.</i>
+								</p>
+
+								<div class="box alt">
+									<div class="row gtr-uniform">
+										<div class="col-5">
+											Before
+											<span class="image fit"><img class="clickable-image" src="images/glitnir/webflex1-before.png" alt="Before" /></span>
+										</div>
+										<div class="col-5"style="margin-left:auto;">
+											After
+											<span class="image fit"><img class="clickable-image" src="images/glitnir/webflex1-after.png" alt="After" /></span>
+										</div>
+									</div>
+								</div>
+
+								<div id="imageModal">
+									<span id="closeModal">&times;</span>
+									<img id="modalImage" src="" alt="Modal Image">
+								</div>
+
+								<button class="collapsible button small" data-target="code1">Show Code</button>
+								
+								<div class="content">
+								<pre id="code1" class="code-block hidden"><code>if(typeof jQuery == 'undefined'){
+	var oScriptElem = document.createElement("script");
+	oScriptElem.type = "text/javascript";
+	oScriptElem.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js";
+	document.head.insertBefore(oScriptElem, document.head.getElementsByTagName("script")[0])
+	}
+
+	window.addEventListener("DOMContentLoaded", async function(event){
+	console.log('page is fully loaded');
+
+	//----- If only one event can be selected for a specific miniplan -----//
+	if (window.location.href.indexOf("?miniplans_id=5&event_id=80") > -1) {
+		//make it so you can only select one checkbox for event_id 80
+
+		document.getElementsByName('ProjectList[]').forEach(function setRadio(e){
+		e.type = "radio";
+		console.log("radio");
+		});
+
+		//append the single selected game to local storage for use later
+		if((localStorage.getItem("selectedEvent")) == null){
+			localStorage.setItem("selectedEvent", "0");
+		}
+	}
+	//----- end event limit logic -----//
+
+
+	var totalCheckboxes = 0,
+		totalChecked = 0;
+
+	$(".eventCheckbox").each(function (){
+		//count how many checkboxes there are total
+		totalCheckboxes = totalCheckboxes + 1;
+
+		//count how many checkboxes are checked on page load
+		if (this.checked){
+			totalChecked = totalChecked + 1;
+		}
+
+		setEvText(totalChecked);
+
+		//set the event listener for each checkbox
+		this.addEventListener('change', function() {
+		//if checkbox is checked, add it to the total number of checked checkboxes 
+		//as long as total checked does not exceed total checkboxes
+		if (this.checked && totalChecked < totalCheckboxes) {
+			totalChecked = totalChecked + 1;
+		} else {
+			//if checkbox is not checked, remove it from the total number of checked checkboxes 
+			//as long as total checked != 0
+			if(totalChecked > 0){
+				totalChecked = totalChecked - 1;
+			}
+		}
+		setEvText(totalChecked);
+		});
+	});
+
+	$("#selectAll").on("click", function() {
+		$(".eventCheckbox").each(function (){
+		//click all checkboxes to check
+		$(this).prop('checked',true).trigger('change');
+		//set total checked to total checkboxes (+1 for each) 
+		//do not exceed total number of checkboxes
+		if(totalChecked < totalCheckboxes){
+			totalChecked = totalChecked + 1;
+		}
+		setEvText(totalChecked);
+		});
+	});
+
+	$("#deselectAll").on("click", function() {
+		$(".eventCheckbox").each(function (){
+		//click all checkboxes to uncheck
+		$(this).prop('checked',false).trigger('change');
+		});
+		totalChecked = 0;
+		setEvText(totalChecked);
+	});
+
+	});
+
+	function setEvText(total) {
+		if(total == 1){
+			document.getElementById("numSelected").textContent = total + " event";
+		} else {
+			document.getElementById("numSelected").textContent = total + " events";
+		}
+	}
+
+	function grabCheckID() {
+	document.getElementsByName('ProjectList[]').forEach(function findChkVal(e){
+		if(e.checked){
+			localStorage.setItem("selectedEvent", e.value);
+		}
+	});
+
+	document.getElementById("employees_recordUpdate1").click();
+
+	}</code></pre>
+	</div>
+
+
+	<h3>Sitemap with Dynamic Search Bar</h3>
+
+	<p>
+		This project involved designing an interactive sitemap to enhance website navigation and user experience. The sitemap includes a search bar that dynamically highlights matches as users type, making it easy to locate specific pages or sections. To provide clear and immediate feedback, the interface also displays the number of results found, updating in real-time as the search query changes. Additionally, I implemented functionality to hide certain links based on the user’s security level, ensuring that only authorized content is accessible. This functionality was achieved using efficient JavaScript, combining user-centered design with robust security considerations to simplify navigation while maintaining data integrity.
+		<i>Note: Screenshots are from a test environment and includes placeholder data.</i>
+	</p>
+
+	<div class="box alt">
+		<div class="row gtr-uniform">
+			<div class="col-5">
+				<span class="image fit"><img src="images/glitnir/sitemap1.png" alt="Sitemap search one" /></span>
+			</div>
+			<div class="col-5"style="margin-left:auto;">
+				<span class="image fit"><img src="images/glitnir/sitemap2.png" alt="Sitemap search two" /></span>
+			</div>
+		</div>
+	</div>
+
+	<button class="collapsible button small" data-target="code2">Show Code</button>
+
+	<div class="content">
+		<pre id="code2" class="code-block hidden"><code>if(typeof jQuery == 'undefined'){
+			var oScriptElem = document.createElement("script");
+			oScriptElem.type = "text/javascript";
+			oScriptElem.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js";
+			document.head.insertBefore(oScriptElem, document.head.getElementsByTagName("script")[0])
+		  }
+	
+		  $(document).ready(function () {
+	
+			var num = document.getElementById("userSecLvl").textContent,
+				lvl = parseInt(num);
+	
+			if (num == 8) {
+			  // hide links level 8 and under should not see
+			  $(".under50hide").each(function (event) {
+				this.style.display = "none";
+			  });
+			  console.log("50 hidden");
+			} else if (num <= 7) {
+			  // hide links level 7 and under should not see
+			  $(".under8hide").each(function (event) {
+				this.style.display = "none";
+			  });
+	
+			  document.getElementById("column-container-7").style.display = "flex";
+			  var sales = document.getElementById("salesreportsmenu").innerHTML,
+				  advsales = document.getElementById("advreportsmenu").innerHTML,
+				  tickets = document.getElementById("ticketsmenu").innerHTML;
+			  document.getElementById("7salesmenu").innerHTML = sales;
+			  document.getElementById("7advsalemenu").innerHTML = advsales;
+			  document.getElementById("7ordtix").innerHTML = tickets;
+	
+			}
+	
+			document.getElementById("clearSearchInput").click();
+	
+			var input = document.getElementById("searchOnPage").value,
+				srcDisplay = document.getElementById("srcResults");
+	
+			// stop the enter key from submitting the form/refreshing the page
+			$("#searchOnPage").keydown(function (event) {
+			  if(event.keyCode === 13){
+				return false;
+			  }
+			});
+	
+			$("#searchOnPage").keyup(function (event) {
+			  var input, filter, txtValue;
+			  input = document.getElementById("searchOnPage");
+			  filter = input.value.toUpperCase();
+	
+			  if (filter.length > 0) {
+				document.getElementById("button-container").style.display = "inline";
+	
+				$(".column-container li:visible").each(function (e) {
+				  txtValue = this.innerText;
+	
+				  if ((txtValue.toUpperCase().includes(filter) == true)) {
+					jQuery(this).addClass("highlight");
+				  } else {
+					jQuery(this).removeClass("highlight");
+				  }
+				});
+	
+			  } else {
+				$(".column-container li").removeClass("highlight");
+				document.getElementById("button-container").style.display = "none";
+			  }
+	
+			  var numresults = $('.column-container .highlight').length,
+				  foundText = "";
+	
+			  if(filter.length > 0){
+	
+				if(numresults == 0){
+				  foundText = "No results found";
+				} else if (numresults > 25) {
+				  foundText = "25+ results found";
+				} else if (numresults == 1) {
+				  foundText = numresults + " result";
+				} else {
+				  foundText = numresults + " results";
+				}
+	
+			  } else { 
+				foundText = "&nbsp;&nbsp;&nbsp;";
+			  }
+	
+	
+	
+			  document.getElementById("searchresnum").innerHTML = foundText; 
+			  //console.log($('.column-container .highlight'));
+	
+			});
+	
+		  });</code></pre>
+</div>
+
+
+
+</section>
+<section  class="main">
+								<h1>Branding and Illustrations</h1>
+
+								<!-- Slideshow 1 -->
+
+								<h2>The Drooling Dog Bakery & Beyond</h2>
+
+								<div class="slideshow-container" id="slideshow1">
+									<div class="mySlides fade">
+									<div class="numbertext">1 / 3</div>
+									<img src="images/droolingdog/ddLogo.jpg" style="width:45%; float: left;">
+									<img src="images/droolingdog/ddLogoAlt.jpg" style="width:45%; float:right;">
+									</div>
+								
+									<div class="mySlides fade">
+									<div class="numbertext">2 / 3</div>
+									<img src="images/droolingdog/ddBanner.png" style="width:100%">
+									</div>
+								
+									<div class="mySlides fade">
+									<div class="numbertext">3 / 3</div>
+									<img src="images/droolingdog/ddHalfDog.jpg" style="width:100%">
+									</div>
+									
+									<br>
+								
+									<div class="dot-container">
+										<span class="dot" onclick="currentSlide(1, 'slideshow1')"></span> 
+										<span class="dot" onclick="currentSlide(2, 'slideshow1')"></span> 
+										<span class="dot" onclick="currentSlide(3, 'slideshow1')"></span> 
+									</div>
+								</div>
+								
+								<!-- Slideshow 2 -->
+
+								<h2>Treat Yourself</h2>
+
+								<div class="slideshow-container" id="slideshow2">
+									<div class="mySlides fade">
+									<div class="numbertext">1 / 3</div>
+									<img src="images/treatyourself/PrimaryLogo.svg" style="width:100%">
+									</div>
+								
+									<div class="mySlides fade">
+									<div class="numbertext">2 / 3</div>
+									<img src="images/treatyourself/cookie-with-words.svg" style="width:45%; float: left;">
+									<img src="images/treatyourself/cookie-plain.svg" style="width:35%; margin-top: -3%; float:right;">
+									</div>
+								
+									<div class="mySlides fade">
+									<div class="numbertext">3 / 3</div>
+									<img src="images/treatyourself/ty-teal.svg" style="width:45%; float: left;">
+									<img src="images/treatyourself/ty-yellow.svg" style="width:45%; float:right;">
+									</div>
+									
+									<br>
+								
+									<div class="dot-container">
+										<span class="dot" onclick="currentSlide(1, 'slideshow2')"></span> 
+										<span class="dot" onclick="currentSlide(2, 'slideshow2')"></span> 
+										<span class="dot" onclick="currentSlide(3, 'slideshow2')"></span> 
+									</div>
+								</div>
+								<!--<h2>Magna feugiat lorem</h2>
+								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis fames ac ante ipsum primis in faucibus.</p>
+								<p>Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Consequat leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit enim turpis lorem ipsum dolor sit amet feugiat. Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet est velit quis lorem.</p>
+								<h2>Tempus veroeros</h2>
+								<p>Cep risus aliquam gravida cep ut lacus amet. Adipiscing faucibus nunc placerat. Tempus adipiscing turpis non blandit accumsan eget lacinia nunc integer interdum amet aliquam ut orci non col ut ut praesent. Semper amet interdum mi. Phasellus enim laoreet ac ac commodo faucibus faucibus. Curae ante vestibulum ante. Blandit. Ante accumsan nisi eu placerat gravida placerat adipiscing in risus fusce vitae ac mi accumsan nunc in accumsan tempor blandit aliquet aliquet lobortis. Ultricies blandit lobortis praesent turpis. Adipiscing accumsan adipiscing adipiscing ac lacinia cep. Orci blandit a iaculis adipiscing ac. Vivamus ornare laoreet odio vis praesent nunc lorem mi. Erat. Tempus sem faucibus ac id. Vis in blandit. Nascetur ultricies blandit ac. Arcu aliquam. Accumsan mi eget adipiscing nulla. Non vestibulum ac interdum condimentum semper commodo massa arcu.</p>
+							--></section>
+
+					</div>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section>
+						<h2 style="text-align: left;">Thanks for visiting</h2>
+						<p>Thank you for taking the time to explore my website! I'm a passionate web developer and graphic designer, dedicated to creating user-friendly, visually engaging digital experiences. With a blend of creativity and technical skills, I work on projects that are both functional and aesthetically appealing. </p>
+						<ul class="actions">
+							<li><a href="index.html" class="button">Home</a></li>
+							<li><a href="assets/MercyCraigResume.pdf" target="_blank" class="button">See My Resume</a></li>
+						</ul>
+					</section>
+					<section>
+						<h2 style="text-align: left;">Contact</h2>
+						<dl class="alt">
+							<dt>Address</dt>
+							<dd>217 S. Mansfield St, Apt C &bull; Ironwood, MI 49938</dd>
+							<dt>Phone</dt>
+							<dd>(906) 364-1157</dd>
+							<dt>Email</dt>
+							<dd><a href="mailto:mercygcraig@outlook.com">mercygcraig@outlook.com</a></dd>
+						</dl>
+						<ul class="icons">
+							<li><a href="https://github.com/mercygcraig" class="icon brands fa-github alt" target="_blank"><span class="label">GitHub</span></a></li>
+							<li><a href="https://www.linkedin.com/in/mercy-craig-0b0a45233/" class="icon brands fa-linkedin alt" target="_blank"><span class="label">LinkedIn</span></a></li>
+						</ul>
+					</section>
+					<p class="copyright">Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+				</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/slideshow.min.js"></script>
+
+
+			<script>
+				// JavaScript for the modal functionality
+				const images = document.querySelectorAll('.clickable-image');
+				const modal = document.getElementById('imageModal');
+				const modalImage = document.getElementById('modalImage');
+				const closeModal = document.getElementById('closeModal');
+		
+				// Add click event to each image
+				images.forEach(image => {
+					image.addEventListener('click', () => {
+						modal.style.display = 'flex';
+						modalImage.src = image.src;
+					});
+				});
+		
+				// Close the modal when the close button is clicked
+				closeModal.addEventListener('click', () => {
+					modal.style.display = 'none';
+				});
+		
+				// Close the modal when clicking outside the image
+				modal.addEventListener('click', (e) => {
+					if (e.target === modal) {
+						modal.style.display = 'none';
+					}
+				});
+
+			</script>
+
+			<script>
+
+				// JavaScript for collapsible functionality
+				document.addEventListener("DOMContentLoaded", () => {
+				const collapsibleButtons = document.querySelectorAll(".collapsible");
+
+				collapsibleButtons.forEach(button => {
+						button.addEventListener("click", () => {
+							const targetId = button.getAttribute("data-target");
+							const codeBlock = document.getElementById(targetId);
+
+							// Toggle the 'hidden' class for the code block
+							codeBlock.classList.toggle("hidden");
+
+							// Update button text based on visibility
+							if (codeBlock.classList.contains("hidden")) {
+								button.textContent = "Show Code";
+							} else {
+								button.textContent = "Hide Code";
+							}
+						});
+					});
+				});
+
+
+			</script>
+
+	</body>
+</html>
